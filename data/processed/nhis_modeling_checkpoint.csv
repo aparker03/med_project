@@ -1,0 +1,4 @@
+objective,models_trained,recommended_model
+Objective 1: Best predictive model,8,random_forest_balanced
+Objective 2: Best interpretable model,4,logistic_regression_balanced
+Objective 3: Lift/cost-sensitive screening,5,random_forest_balanced
