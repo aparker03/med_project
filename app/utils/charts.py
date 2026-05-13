@@ -123,6 +123,36 @@ def metric_comparison_chart(df: pd.DataFrame, metric: str) -> go.Figure:
     return _finish_figure(fig)
 
 
+def regression_metric_chart(df: pd.DataFrame, metric: str, lower_is_better: bool = True) -> go.Figure:
+    if metric not in df.columns or "model" not in df.columns:
+        return _finish_figure(go.Figure())
+
+    chart_df = df.sort_values(metric, ascending=lower_is_better).copy()
+    label_cols = [col for col in ["objective", "version", "model"] if col in chart_df.columns]
+    chart_df["display_name"] = chart_df[label_cols].astype(str).agg(" - ".join, axis=1)
+    chart_df = chart_df.sort_values(metric, ascending=not lower_is_better)
+    fig = px.bar(
+        chart_df,
+        x=metric,
+        y="display_name",
+        orientation="h",
+        color="model",
+        color_discrete_sequence=COLOR_SEQUENCE,
+        text=metric,
+    )
+    text_template = "%{x:,.0f}" if metric.upper() in {"MAE", "RMSE", "HIGH_COST_MAE"} or "MAE" in metric or "RMSE" in metric else "%{x:.3f}"
+    fig.update_traces(texttemplate=text_template, textposition="auto")
+    fig.update_layout(
+        title=friendly_label(metric),
+        xaxis_title=friendly_label(metric),
+        yaxis_title="",
+        margin={"l": 20, "r": 20, "t": 60, "b": 60},
+        showlegend=False,
+        height=max(440, 58 * len(chart_df)),
+    )
+    return _finish_figure(fig)
+
+
 def feature_importance_chart(df: pd.DataFrame, top_n: int = 15) -> go.Figure:
     chart_df = df.sort_values("importance", ascending=False).head(top_n).copy()
     chart_df["feature_label"] = chart_df["feature"].apply(_clean_feature_name)
@@ -141,6 +171,34 @@ def feature_importance_chart(df: pd.DataFrame, top_n: int = 15) -> go.Figure:
         xaxis_title="Importance",
         yaxis_title="",
         margin={"l": 20, "r": 20, "t": 60, "b": 40},
+    )
+    return _finish_figure(fig)
+
+
+def meps_feature_importance_chart(df: pd.DataFrame, top_n: int = 20) -> go.Figure:
+    value_col = "abs_coef" if "abs_coef" in df.columns else "importance" if "importance" in df.columns else None
+    feature_col = "feature" if "feature" in df.columns else None
+    if value_col is None or feature_col is None:
+        return _finish_figure(go.Figure())
+
+    chart_df = df.sort_values(value_col, ascending=False).head(top_n).copy()
+    chart_df["feature_label"] = chart_df[feature_col].apply(_clean_feature_name)
+    chart_df = chart_df.sort_values(value_col, ascending=True)
+    fig = px.bar(
+        chart_df,
+        x=value_col,
+        y="feature_label",
+        orientation="h",
+        color_discrete_sequence=[COLOR_SEQUENCE[2]],
+        text=value_col,
+    )
+    fig.update_traces(texttemplate="%{x:,.0f}", textposition="auto")
+    fig.update_layout(
+        title="Largest saved feature effects or importance values",
+        xaxis_title=friendly_label(value_col),
+        yaxis_title="",
+        margin={"l": 20, "r": 20, "t": 60, "b": 40},
+        height=max(520, 34 * top_n),
     )
     return _finish_figure(fig)
 
@@ -165,6 +223,72 @@ def threshold_chart(df: pd.DataFrame) -> go.Figure:
         yaxis_tickformat=".0%",
         legend_title="",
         margin={"l": 20, "r": 20, "t": 60, "b": 80},
+    )
+    return _finish_figure(fig)
+
+
+def high_cost_segment_chart(df: pd.DataFrame, title: str) -> go.Figure:
+    metric_cols = [col for col in ["MAE", "RMSE"] if col in df.columns]
+    if not metric_cols:
+        metric_cols = [col for col in ["capture_rate"] if col in df.columns]
+    if not metric_cols or "segment" not in df.columns:
+        return _finish_figure(go.Figure())
+
+    chart_df = df[["segment", *metric_cols]].melt(id_vars="segment", var_name="Metric", value_name="Value")
+    fig = px.bar(
+        chart_df,
+        x="segment",
+        y="Value",
+        color="Metric",
+        barmode="group",
+        color_discrete_sequence=COLOR_SEQUENCE,
+        text="Value",
+    )
+    fig.update_traces(texttemplate="%{y:,.0f}", textposition="outside")
+    fig.update_layout(
+        title=title,
+        xaxis_title="High-cost segment",
+        yaxis_title="Metric value",
+        margin={"l": 20, "r": 20, "t": 60, "b": 100},
+        height=520,
+    )
+    return _finish_figure(fig)
+
+
+def quintile_heatmap(df: pd.DataFrame) -> go.Figure:
+    if df.empty:
+        return _finish_figure(go.Figure())
+
+    index_col = df.columns[0]
+    matrix = df.set_index(index_col)
+    fig = px.imshow(
+        matrix,
+        text_auto=True,
+        aspect="auto",
+        color_continuous_scale=["#111827", "#2563eb", "#fbbf24"],
+    )
+    fig.update_layout(
+        title="Predicted spending group by actual spending group",
+        xaxis_title="Predicted spending group",
+        yaxis_title="Actual spending group",
+        margin={"l": 20, "r": 20, "t": 60, "b": 60},
+        height=520,
+    )
+    return _finish_figure(fig)
+
+
+def spending_distribution_chart(df: pd.DataFrame, column: str = "TOTEXP23") -> go.Figure:
+    if column not in df.columns:
+        return _finish_figure(go.Figure())
+
+    chart_df = df[[column]].copy()
+    fig = px.histogram(chart_df, x=column, nbins=50, color_discrete_sequence=[COLOR_SEQUENCE[0]])
+    fig.update_layout(
+        title="Distribution of total healthcare spending",
+        xaxis_title=friendly_label(column),
+        yaxis_title="Rows",
+        margin={"l": 20, "r": 20, "t": 60, "b": 60},
+        height=470,
     )
     return _finish_figure(fig)
 

@@ -1,0 +1,4 @@
+objective,models_trained,recommended_model,selection_metric
+Objective 1: Best predictive model,8,A_baseline_adult / linear_regression,RMSE on dollar scale
+Objective 2: Best interpretable model,4,lasso_regression,MAE plus explanation quality
+Objective 3: Robust / skew-aware,4,gradient_boosting_log1p,dollar MAE (broad skewed-expenditure framing)

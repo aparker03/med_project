@@ -17,7 +17,7 @@ The repository uses public-use files from national health surveys:
 - NHIS 2023 Paradata
 - MEPS 2023 HC-251 Full Year Consolidated Public Use File
 
-The Streamlit app reads saved CSV outputs from `data/processed`. It does not read raw files directly.
+The Streamlit app reads saved CSV outputs from `data/processed`. It does not read raw files directly. The current app includes NHIS processed outputs and MEPS processed outputs.
 
 ## Repository Structure
 
@@ -61,7 +61,7 @@ The current notebook workflow is organized around NHIS and MEPS preparation and 
 
 ## Processed Data Outputs
 
-The `data/processed` folder currently includes NHIS model-ready data, weighted group-rate summaries, model comparison files, feature importance, threshold reviews, lift review outputs, and small scoring examples.
+The `data/processed` folder currently includes NHIS model-ready data, weighted group-rate summaries, model comparison files, feature importance, threshold reviews, lift review outputs, MEPS model-ready data, MEPS high-cost segment reviews, MEPS predicted-vs-actual spending group review, and MEPS skew-aware modeling results.
 
 Key processed outputs include:
 
@@ -77,6 +77,16 @@ Key processed outputs include:
 - `nhis_score_output_30_predictions.csv`
 - `nhis_score_validation_hidden_target.csv`
 - `nhis_statistical_screening_checks.csv`
+- `meps_model_ready_v1.csv`
+- `meps_model_ready_v1_with_saq.csv`
+- `meps_modeling_checkpoint.csv`
+- `meps_objective1_model_comparison_results.csv`
+- `meps_objective1_feature_importance.csv`
+- `meps_objective1_high_cost_segment_review.csv`
+- `meps_objective1_predicted_actual_quintile.csv`
+- `meps_objective2_interpretable_model_results.csv`
+- `meps_objective3_high_cost_segment_review.csv`
+- `meps_objective3_robust_skew_aware_results.csv`
 
 ## Streamlit App
 
@@ -86,8 +96,8 @@ Current pages include:
 
 - Home page with project status and available output counts
 - NHIS Explorer for weighted rates by group
-- MEPS Explorer for app-ready MEPS CSV previews when processed files are available
-- Model Lab for saved model comparisons, feature importance, threshold tradeoffs, and lift review
+- MEPS Explorer for healthcare spending, high-cost segment review, predicted-vs-actual spending groups, and skew-aware outputs
+- Model Lab for saved NHIS and MEPS model comparisons, feature importance, threshold tradeoffs, lift review, high-cost segment review, and skew-aware results
 - Ethics and Limitations
 - Data Dictionary companion reference
 
@@ -130,5 +140,4 @@ The app requirements are listed in `requirements.txt`:
 
 ## Current Status
 
-The app is under active development. The NHIS Explorer and Model Lab use saved NHIS outputs now. MEPS app pages are prepared for processed or interim MEPS CSVs, but the current app does not read raw MEPS data directly.
-
+The app is under active development. The NHIS Explorer uses saved NHIS weighted-rate outputs. The MEPS Explorer and Model Lab now use saved MEPS processed outputs and model result files. The app still avoids raw data and does not retrain models.
