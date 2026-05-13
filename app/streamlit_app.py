@@ -128,5 +128,3 @@ with st.expander("Available processed files"):
 
 if meps_files:
     st.info(f"{format_count(len(meps_files))} processed MEPS file(s) were found. Open the MEPS page for a quick file preview.")
-else:
-    st.info("No app-ready MEPS CSV files were found in processed outputs yet, so the MEPS page stays in reference mode.")
