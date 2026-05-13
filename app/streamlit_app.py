@@ -70,8 +70,8 @@ with card_d:
     st.markdown(
         metric_card(
             "Model artifacts",
-            format_count(model_artifact_count) if model_artifact_count else "None found",
-            "Saved comparison, feature-importance, and threshold-review files.",
+            "NHIS + MEPS",
+            "Saved comparison, feature-importance, threshold-review, high-cost segment, predicted-vs-actual, and skew-aware review files used to explain model behavior in the app.",
         ),
         unsafe_allow_html=True,
     )

@@ -4,6 +4,8 @@ This project studies healthcare access barriers and cost burden using public-use
 
 The project is intended for both technical and nontechnical readers. It keeps plain-language interpretation close to the results while preserving links back to the underlying variables, processed files, and modeling artifacts.
 
+Live app: [Healthcare Access & Cost Burden Explorer](https://healthcare-access-burden.streamlit.app/)
+
 ## Project Purpose
 
 The main purpose is to examine patterns in healthcare access, affordability pressure, healthcare cost burden, and cost-related mental health care barriers. The project focuses on descriptive summaries and saved model outputs. It does not make causal claims, and it should not be used to make decisions about individual people.
