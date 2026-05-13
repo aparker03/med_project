@@ -1,0 +1,29 @@
+[[pages]]
+path = "streamlit_app.py"
+name = "Healthcare Access & Cost Burden Explorer"
+icon = ":material/home:"
+
+[[pages]]
+path = "pages/1_NHIS_Explorer.py"
+name = "NHIS Explorer"
+icon = ":material/bar_chart:"
+
+[[pages]]
+path = "pages/2_MEPS_Explorer.py"
+name = "MEPS Explorer"
+icon = ":material/attach_money:"
+
+[[pages]]
+path = "pages/3_Model_Lab.py"
+name = "Model Lab"
+icon = ":material/science:"
+
+[[pages]]
+path = "pages/4_Ethics_and_Limitations.py"
+name = "Ethics and Limitations"
+icon = ":material/balance:"
+
+[[pages]]
+path = "pages/5_Data_Dictionary.py"
+name = "Data Dictionary"
+icon = ":material/menu_book:"

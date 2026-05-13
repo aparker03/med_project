@@ -1,4 +1,4 @@
-# Streamlit App
+# Healthcare Access & Cost Burden Explorer App
 
 This folder contains the Streamlit app for the Healthcare Access and Cost Burden Explorer. The app turns saved CSV outputs into a readable project workspace for reviewing weighted NHIS summaries, MEPS spending outputs, model artifacts, limitations, and variable references.
 
