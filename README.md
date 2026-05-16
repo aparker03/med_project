@@ -6,6 +6,13 @@ The project is intended for both technical and nontechnical readers. It keeps pl
 
 Live app: [Healthcare Access & Cost Burden Explorer](https://healthcare-access-burden.streamlit.app/)
 
+## Final Deliverables
+
+- [Dataset documentation](deliverables/dataset_documentation.md)
+- [Task reports](deliverables/task_reports.md)
+- [Score dataset and results](deliverables/score_dataset_and_results.md)
+- [Team contribution statement](deliverables/team_contribution_statement.md)
+
 ## Project Purpose
 
 The main purpose is to examine patterns in healthcare access, affordability pressure, healthcare cost burden, and cost-related mental health care barriers. The project focuses on descriptive summaries and saved model outputs. It does not make causal claims, and it should not be used to make decisions about individual people.
@@ -55,11 +62,11 @@ The current notebook workflow is organized around NHIS and MEPS preparation and 
 3. `notebooks/03_nhis_modeling.ipynb`  
    NHIS modeling workflow and saved model-output CSVs.
 
-4. `notebooks/01_meps_eda_cleaning_(4).ipynb`  
+4. `notebooks/04_meps_eda_cleaning.ipynb`  
    Initial MEPS exploration and cleaning.
 
-5. `notebooks/05_meps_modeling_(1).ipynb`  
-   MEPS modeling work in progress.
+5. `notebooks/05_meps_modeling.ipynb`  
+   MEPS modeling workflow and saved regression-output CSVs.
 
 ## Processed Data Outputs
 
@@ -90,7 +97,7 @@ Key processed outputs include:
 - `meps_objective3_high_cost_segment_review.csv`
 - `meps_objective3_robust_skew_aware_results.csv`
 
-## Streamlit App
+## Interactive App
 
 The Streamlit app lives in `app/`. It provides a project workspace for reviewing saved outputs without rerunning notebooks or retraining models.
 

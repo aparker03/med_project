@@ -1,7 +1,7 @@
 import streamlit as st
 
 from utils.data_loader import list_processed_files, load_csv
-from utils.metrics import format_count, format_percent
+from utils.metrics import format_count
 from utils.text_blocks import apply_page_style, home_intro, metric_card, missing_data_note
 
 
@@ -23,20 +23,13 @@ nhis_files = [name for name in processed_files if name.lower().startswith("nhis_
 meps_files = [name for name in processed_files if name.lower().startswith("meps_")]
 
 model_ready = load_csv("nhis_model_ready_v1.csv")
-outcome_text = "File missing"
-model_rows_text = "File missing"
+meps_model_ready = load_csv("meps_model_ready_v1.csv")
+nhis_rows_text = "File missing"
+meps_rows_text = "File missing"
 if model_ready is not None and not model_ready.empty:
-    model_rows_text = format_count(len(model_ready))
-    if "mental_health_cost_barrier" in model_ready.columns:
-        outcome_text = format_percent(model_ready["mental_health_cost_barrier"].mean())
-
-model_artifact_count = len(
-    [
-        name
-        for name in processed_files
-        if "model" in name.lower() or "threshold" in name.lower() or "feature_importance" in name.lower()
-    ]
-)
+    nhis_rows_text = format_count(len(model_ready))
+if meps_model_ready is not None and not meps_model_ready.empty:
+    meps_rows_text = format_count(len(meps_model_ready))
 
 card_a, card_b, card_c, card_d = st.columns(4)
 with card_a:
@@ -44,25 +37,25 @@ with card_a:
         metric_card(
             "NHIS outputs",
             format_count(len(nhis_files)) if nhis_files else "None found",
-            "Processed NHIS CSV files available for the explorer and model pages.",
+            "Processed NHIS files for weighted access-barrier rates and classification model review.",
         ),
         unsafe_allow_html=True,
     )
 with card_b:
     st.markdown(
         metric_card(
-            "Model-ready rows",
-            model_rows_text,
-            "Rows in the saved NHIS modeling file used for snapshots and checks.",
+            "NHIS model-ready rows",
+            nhis_rows_text,
+            "Rows in the saved NHIS modeling file used for mental health cost-barrier analysis.",
         ),
         unsafe_allow_html=True,
     )
 with card_c:
     st.markdown(
         metric_card(
-            "Measured barrier",
-            outcome_text,
-            "Share of model-ready NHIS rows marked with a mental health cost barrier.",
+            "MEPS model-ready rows",
+            meps_rows_text,
+            "Rows in the saved MEPS modeling file used for healthcare spending and cost-burden review.",
         ),
         unsafe_allow_html=True,
     )

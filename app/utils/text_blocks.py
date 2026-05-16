@@ -143,8 +143,9 @@ def small_note(text: str) -> None:
 
 def home_intro() -> str:
     return """
-This workspace brings the processed survey outputs together in one place, with a focus on
-healthcare access, affordability pressure, and mental health cost barriers in NHIS data.
+An interactive workspace for exploring public-use survey outputs from NHIS and MEPS.
+The app connects reported access barriers, affordability pressure, mental health cost barriers,
+healthcare spending, high-cost segments, and model behavior in one place.
 
 It is meant to be readable for people who want the story in plain language and useful for
 reviewers who want to trace results back to the saved CSV artifacts. The app reads existing
